@@ -1,6 +1,3 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <html lang="en">
 
 <head>
@@ -10,14 +7,37 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>All Dunks Test Server</title>
-    <!-- ajax/jquery link -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body>
+    <style>
+        #search-results {
+            position: absolute;
+            top: 70%;
+            left: 38%;
+            width: 20%;
+            background-color: #fff;
+        }
+
+        #product-image {
+            max-width: 300px;
+            max-height: 200px;
+        }
+    </style>
 
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,30 +52,27 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 offset-md-3">
-                            <form action="{{ route('search') }}" method="GET" id="search-form">
+
+                            <form action="/products/searchResult" method="GET">
+
                                 <div class="input-group mb-3">
                                     <input type="text" name="query" id="search-input" class="form-control" placeholder="Search products...">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary" id="search-submit" type="submit">Search</button>
                                     </div>
                                 </div>
-                                <div>
-                                    <span class="rounded" id="search-results"></span>
-                                </div>
-                                
                             </form>
+
+                            <div>
+                                <span class="rounded" id="search-results">
+                                </span>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
-                <style>
-                    #search-results {
-                        position: absolute;
-                        top: 70%;
-                        left: 39%;
-                        width: 20%;
-                        background-color: #fff;
-                    }
-                </style>
+
 
 
                 <script src="{{ asset('js/search.js') }}"></script>
@@ -110,37 +127,37 @@
         </div>
     </header>
     <!-- Section-->
-    <div id="allProductSection">
-        <div id="mensSection">
-            <section class="py-5">
-                <div class="container px-4 px-lg-5 mt-5">
-                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                        @foreach($Products as $product)
-                        <div class="col mb-5">
-                            <div class="card h-100">
-                                <!-- Product image-->
-                                <img class="card-img-top" src="{{ asset('storage/product/' . $product->file_path) }}" alt="Product Image">
-                                <!-- Product details-->
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <!-- Product name-->
-                                        <h5 class="fw-bolder">{{$product->name}}</h5>
-                                        <!-- Product price-->
-                                        ${{$product->price}}
-                                    </div>
-                                </div>
-                                <!-- Product actions-->
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center"><button id="addToCart" class="btn btn-outline-dark mt-auto" name="{{$product->id}}" onclick="getId(this.name), counter(), checkAuth()">Add to Cart</button></div>
-                                </div>
+    <div id="searchSection">
+
+
+    </div>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                @foreach($Products as $product)
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{{ asset('storage/product/' . $product->file_path) }}" alt="Product Image">
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{$product->name}}</h5>
+                                <!-- Product price-->
+                                ${{$product->price}}
                             </div>
                         </div>
-                        @endforeach
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><button id="addToCart" class="btn btn-outline-dark mt-auto" name="{{$product->id}}" onclick="getId(this.name), counter(), checkAuth()">Add to Cart</button></div>
+                        </div>
                     </div>
                 </div>
-            </section>
+                @endforeach
+            </div>
         </div>
-    </div>
+    </section>
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">
@@ -150,13 +167,14 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+
 </body>
 
 </html>
 
 <script>
     $('#womansSection').hide();
+    $('#searchSection').hide();
 
     $(document).ready(function() {
         $.ajaxSetup({
@@ -164,6 +182,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
 
         $('#mensProductBtn').click(function(e) {
             $('#mensSection').show('');
@@ -206,6 +225,9 @@
 
         });
     }
+    //function for when user clicks on search item that pops up while searching
+
+
     // check if user is sigend in
     function checkAuth() {
         $.ajax({
@@ -218,4 +240,111 @@
             }
         });
     }
+
+    $('#search-input').on('keyup', function() {
+        var query = $(this).val();
+
+        if (query.trim() === '') {
+            $('#search-results').html('');
+        } else {
+
+            $.ajax({
+                url: '/products/search',
+                type: 'GET',
+                data: {
+                    query: query
+                },
+                success: function(data) {
+
+
+                    var results = '';
+
+                    $.each(data, function(index, product) {
+                        results += '<div class="product"> ' +
+                            '<input type="hidden" id="id" name="' + product.id + '"> </input>' +
+                            '<input type="hidden" id="name" name="' + product.name + '"> </input>' +
+                            '<input type="hidden" id="price" name="' + product.price + '"> </input>' +
+                            '<input type="hidden" id="file_path" name="' + product.file_path + '"> </input>' +
+                            '<button type="" class="btn btn-light" name="' + product.id + '" id="' + product.id + '" onclick="search_submit(this.id)">' +
+                            product.name + '</button>' +
+                            '</div>';
+                    });
+
+                    $('#search-results').html(results);
+
+                }
+            });
+        }
+    });
+
+    function search_submit(id) {
+        //alert('you is in search_submit function ' + id + '');
+        //console.log(id);
+        console.log(id);
+        $('#searchSection').show();
+
+        var productId = document.getElementById('id').getAttribute('name');
+        var productName = document.getElementById('name').getAttribute('name');
+        var productPrice = document.getElementById('price').getAttribute('name');
+        var productFile_path = document.getElementById('file_path').getAttribute('name');
+
+        var test = '{{ asset( "storage/product/' + productFile_path + '") }}';
+
+        console.log(productFile_path);
+
+
+        var product = '';
+
+        product += '<section class="py-5">' +
+            '<div class="container px-4 px-lg-5 mt-5">' +
+            '<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">' +
+
+            '<div class="col mb-5">' +
+            '<div class="card h-100">' +
+
+            '<img class="card-img-top product-image" src="/storage/product/' + productFile_path + '" alt="Product Image">' +
+
+            '<div class="card-body p-4">' +
+            '<div class="text-center">' +
+
+            '<h5 class="fw-bolder" id="name">' + productName + '</h5>' +
+
+            '<span id="price"></span>' +
+            '</div>' +
+            '</div>' +
+
+            '<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">' +
+            '<div class="text-center"><button id="addToCart" class="btn btn-outline-dark mt-auto" name="' + productId + '" onclick="getId(this.name), counter(), checkAuth()">Add to Cart</button></div>' +
+            ' </div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+
+
+            '</div>' +
+            '</div>' +
+            '</section>';
+        $('#searchSection').html(product);
+
+
+        $('#allProductSection').hide('');
+
+    }
+
+
+    $('#search-submit').click(function() {
+
+        var query = $('#search-input').val();
+
+        console.log(query);
+
+
+        $.ajax({
+            url: '/products/search_submit',
+            type: 'GET',
+            data: {
+                query: query
+            }
+        });
+    });
 </script>

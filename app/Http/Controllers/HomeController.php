@@ -50,8 +50,8 @@ class HomeController extends Controller
             return view('admin.index');
         }else{
            
-            return view('index',['count'=> $count, 'maleProducts' => $male_products, 'femaleProducts' => $female_products]);
-        }
+            return view('index', ['count' => $count, 'maleProducts' => $male_products, 'femaleProducts' => $female_products ]);
+         }
     }
 
     public function view_products()

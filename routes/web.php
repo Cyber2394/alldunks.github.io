@@ -23,6 +23,14 @@ use App\Http\Controllers\CartController;
 Routes for testing
 */
 
+Route::get('/debug', [ProductController::class, 'debug'])->name('debug');
+
+Route::post('/products/search_submit', [ProductController::class, 'search_submit'])->name('products.search_submit');
+
+Route::post('/products/general_search_submit', [ProductController::class, 'general_search_submit'])->name('products.general_search_submit');
+
+//Route::post('/products/search_submit', [ProductController::class, 'searchResult'])->name('products.search_submit');
+
 Route::resource('test', 'App\Http\Controllers\TestController');
 
 Route::get('view', [TestController::class, 'index']);
@@ -55,7 +63,8 @@ Route::get('/products/destroy_page', [ProductController::class, 'destroy_page'])
 
 Route::get('/products/search', [ProductController::class, 'search']);
 
-Route::get('/products/search_submit', [ProductController::class, 'searchResult'])->name('search');
+Route::get('/products/searchResult', [ProductController::class, 'searchResult']);
+
 
 Route::resource('products', 'App\Http\Controllers\ProductController');
 
@@ -74,7 +83,7 @@ Home routes
 
 Route::get('/view_products', [App\Http\Controllers\HomeController::class, 'view_products']);
 
-Route::get('/', [ProductController::class, 'index'])->name('home');
+Route::get('/', [ProductController::class, 'index']);
 
 Auth::routes();
 

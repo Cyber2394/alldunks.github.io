@@ -13,6 +13,9 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function debug() {
+        echo "testing";
+    }
     public function index()
     {
         $products = Product::all();
@@ -77,44 +80,27 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('query');
+        $query = $request->input('query1');
 
         $products = Product::where('name', 'LIKE', "%$query%")->get();
 
         return response()->json($products);
     }
 
-    public function searchResult(Request $request)
+    public function search_submit(Request $request)
     {
+        $id = $request->id;
+        $products = Product::where('id', "$id")->get();
+        return json_encode($products);
+    
+    }
+    public function general_search_submit(Request $request)
+    {
+        $val_query = $request->input('val_query1');
 
-        $query = $request->input('query');
+        $products = Product::where('name', 'LIKE', "%$val_query%")->get();
 
-        return $query;
-
-        if ($query == '') {
-            return redirect('/');
-        } else {
-
-            $products = Product::where('name', 'LIKE', "%$query%")->get();
-            // $male_products = Product::where('is_male', '=', 1)->get();
-            // $female_products = Product::where('is_female', '=', 1)->get();
-            //dd($male_products);
-            $user_id =  Auth::id();
-
-            $cart = Cart::where('user_id', '=', $user_id)->get('product_id');
-            //return $cart;
-            preg_match_all('!\d+!', $cart, $matches);
-
-            //print("<pre>".print_r($matches,true)."</pre>");
-            foreach ($matches as $match) {
-                $count = Cart::where('user_id', '=', $user_id)
-                    ->update([
-                        'count' => DB::raw('count+1'),
-                    ]);
-            }
-
-            return view('index_search', ['count' => $count, 'Products' => $products]);
-        }
+        return response()->json($products);
     }
     /**
      * Show the form for creating a new resource.
